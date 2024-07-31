@@ -30,19 +30,68 @@ enum Role {
 }
 
 model User {
-id            String       @id @default(uuid())
-name          String
-email         String       @unique
-walletAddress Bytes?       @unique
-profileImage  String?
-roles         Role[]       @default([USER])
-isActive      Boolean      @default(true)
-isBlocked     Boolean      @default(false)
-lastLoggedIn  DateTime?    @default(now())
-createdAt     DateTime     @default(now())
-updatedAt     DateTime     @updatedAt
-deletedAt     DateTime?  
-
-@@map("users")
+  uuid            String    @default(uuid())
+  id                Int         @id    @default(autoincrement()) @unique
+       
+  name          String
+  email         String    @unique
+  walletAddress Bytes?    @unique
+  profileImage  String?
+  roles         Role[]    @default([USER])
+  isActive      Boolean   @default(true)
+  isBlocked     Boolean   @default(false)
+  lastLoggedIn  DateTime? @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+  projects      Project[]
 }
 
+model Project {
+  id                Int           @id @default(autoincrement())
+  uuid              String      @unique  @default(uuid())
+  name              String
+  budget            Float // Minting details handled by smart contract
+  tokenName         String
+  tokenQuantity     Float // Minting details handled by smart contract
+  tokenSymbol       String
+  rwaRepresentation String // Real World Asset Representation
+  description       String
+  userId            Int
+  contractAddress   String
+  user              User          @relation(fields: [userId], references: [id])
+  vendors           Vendor[]
+  beneficiaries     Beneficiary[]
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime?     @updatedAt
+}
+
+model Vendor {
+  id   Int    @id @default(autoincrement())
+  uuid String @default(uuid())  @unique 
+
+  name          String
+  walletAddress String    @unique
+  location      Json?
+  email         String
+  projectUUID    String
+  project       Project   @relation(fields: [projectUUID], references: [uuid])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+}
+
+model Beneficiary {
+  id            Int       @id @default(autoincrement())
+  uuid          String    @default(uuid()) @unique 
+  name          String
+  walletAddress String    @unique
+  email         String?
+  gender        String
+  age           Int
+  latitude      Float
+  longitude     Float
+  projectUUID    String
+  project       Project   @relation(fields: [projectUUID], references: [uuid])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+}

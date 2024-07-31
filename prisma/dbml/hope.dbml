@@ -2,19 +2,17 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
-Project "SEED 2.0" {
+Project "Hope" {
   database_type: 'PostgreSQL'
-  Note: 'SEED 2.0'
+  Note: 'Hope'
 }
 
-Table User {
-  uuid String [not null]
-  id Int [pk, increment]
+Table Organization {
+  id String [pk]
   name String [not null]
   email String [unique, not null]
   walletAddress Bytes [unique]
   profileImage String
-  roles Role[] [not null]
   isActive Boolean [not null, default: true]
   isBlocked Boolean [not null, default: false]
   lastLoggedIn DateTime [default: `now()`]
@@ -26,7 +24,6 @@ Table User {
 
 Table Project {
   id Int [pk, increment]
-  uuid String [unique, not null]
   name String [not null]
   budget Float [not null]
   tokenName String [not null]
@@ -34,31 +31,28 @@ Table Project {
   tokenSymbol String [not null]
   rwaRepresentation String [not null]
   description String [not null]
-  userId Int [not null]
-  contractAddress String [not null]
-  user User [not null]
+  organizationId String [not null]
+  organization Organization [not null]
   vendors Vendor [not null]
   beneficiaries Beneficiary [not null]
   createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime
+  updatedAt DateTime [not null]
 }
 
 Table Vendor {
   id Int [pk, increment]
-  uuid String [unique, not null]
   name String [not null]
   walletAddress String [unique, not null]
-  location Json
+  location String [not null]
   email String [not null]
-  projectUUID String [not null]
+  projectId Int [not null]
   project Project [not null]
   createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime
+  updatedAt DateTime [not null]
 }
 
 Table Beneficiary {
   id Int [pk, increment]
-  uuid String [unique, not null]
   name String [not null]
   walletAddress String [unique, not null]
   email String
@@ -66,19 +60,14 @@ Table Beneficiary {
   age Int [not null]
   latitude Float [not null]
   longitude Float [not null]
-  projectUUID String [not null]
+  projectId Int [not null]
   project Project [not null]
   createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime
+  updatedAt DateTime [not null]
 }
 
-Enum Role {
-  ADMIN
-  USER
-}
+Ref: Project.organizationId > Organization.id
 
-Ref: Project.userId > User.id
+Ref: Vendor.projectId > Project.id
 
-Ref: Vendor.projectUUID > Project.uuid
-
-Ref: Beneficiary.projectUUID > Project.uuid
+Ref: Beneficiary.projectId > Project.id

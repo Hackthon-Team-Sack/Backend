@@ -10,7 +10,7 @@ export const users = [
   {
     name: 'Hope Admin',
     roles: [ROLE.ADMIN],
-    email: 'home.admin@rumsan.com',
+    email: 'hope.admin@rumsan.com',
   },
   {
     name: 'Hope User',

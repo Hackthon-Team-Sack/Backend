@@ -5,6 +5,10 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { MailModule } from './mailer/mailer.module';
 import { UsersModule } from './users/users.module';
+import { ProjectsModule } from './projects/projects.module';
+import { BeneficiariesModule } from './beneficiaries/beneficiaries.module';
+import { VendorsModule } from './vendors/vendors.module';
+import { RequestContextModule } from './request-context/request-context.module';
 
 @Module({
   imports: [
@@ -23,6 +27,10 @@ import { UsersModule } from './users/users.module';
     PrismaModule,
     MailModule,
     UsersModule,
+    ProjectsModule,
+    BeneficiariesModule,
+    VendorsModule,
+    RequestContextModule,
   ],
 })
 export class AppModule {}
