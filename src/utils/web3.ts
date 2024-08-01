@@ -4,7 +4,7 @@ import { ERC2771FORWARDER } from './forwarder-abi';
 export async function createContractSigner(abi: any, address: string) {
   //  Create wallet from private key
   const provider = new JsonRpcProvider(process.env.NETWORK_PROVIDER);
-  const privateKey = process.env.RAHAT_ADMIN_PRIVATE_KEY;
+  const privateKey = process.env.ADMIN_PRIVATE_KEY;
   const wallet = new ethers.Wallet(privateKey, provider);
   //  Create an instance of the contract
   const contracts = new Contract(address, abi, wallet);
