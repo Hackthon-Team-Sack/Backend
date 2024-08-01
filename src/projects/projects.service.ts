@@ -4,6 +4,8 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RequestContextService } from 'src/request-context/request-context.service';
 import { UUID } from 'crypto';
+import { executeMetaTxRequest } from 'src/utils/web3';
+import { MetaTransactionDto } from './dto/meta-transaction.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -53,5 +55,9 @@ export class ProjectsService {
         uuid,
       },
     });
+  }
+
+  executeMetaTransaction(payload: MetaTransactionDto) {
+    return executeMetaTxRequest(payload);
   }
 }

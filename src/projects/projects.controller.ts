@@ -4,6 +4,7 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { UUID } from 'crypto';
+import { MetaTransactionDto } from './dto/meta-transaction.dto';
 
 @Controller('projects')
 @ApiTags('Projects')
@@ -33,5 +34,10 @@ export class ProjectsController {
   @Delete(':uuid')
   remove(@Param('uuid') uuid: UUID) {
     return this.projectsService.remove(uuid);
+  }
+
+  @Post('execute-meta-transaction')
+  executeMetaTransaction(@Body() payload: MetaTransactionDto) {
+    return this.projectsService.executeMetaTransaction(payload);
   }
 }
