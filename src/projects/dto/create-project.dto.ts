@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateProjectDto {
   @ApiProperty({
@@ -7,12 +7,6 @@ export class CreateProjectDto {
   })
   @IsString()
   name: string;
-
-  @ApiProperty({
-    example: 10000.0,
-  })
-  @IsNumber()
-  budget: number;
 
   @ApiProperty({
     example: 'Token Name',
@@ -49,4 +43,11 @@ export class CreateProjectDto {
   })
   @IsString()
   contractAddress: string;
+
+  @ApiProperty({
+    example:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCy16nhIbV3pI1qLYHMJKwbH2458oiC9EmA&s',
+  })
+  @IsOptional()
+  imageUrl: string;
 }

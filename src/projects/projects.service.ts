@@ -14,22 +14,29 @@ export class ProjectsService {
     private requestContextService: RequestContextService,
   ) {}
 
-  create(createProjectDto: CreateProjectDto) {
+  async create(createProjectDto: CreateProjectDto) {
     const user = this.requestContextService.getUser();
-    return this.prisma.project.create({
+    const project = await this.prisma.project.create({
       data: {
         ...createProjectDto,
+        budget: createProjectDto.tokenQuantity,
         user: {
           connect: {
-            id: user.id as number,
+            id: (user?.id as number) || 1,
           },
         },
       },
     });
+    return project;
   }
 
   findAll() {
-    return this.prisma.project.findMany();
+    return this.prisma.project.findMany({
+      include: {
+        _count: true,
+        user: true,
+      },
+    });
   }
 
   findOne(uuid: UUID) {

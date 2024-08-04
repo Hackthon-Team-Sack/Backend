@@ -73,6 +73,7 @@ export class CustomExceptionFilter implements PipeTransform<any>, ExceptionFilte
 
     if (exception instanceof HttpException) {
       exceptionResponse = exception?.getResponse();
+      console.log('exceptionResponse', exceptionResponse);
 
       if (isObjectWithErrors(exceptionResponse)) {
         responseData.meta = exceptionResponse?.errors ?? '';
