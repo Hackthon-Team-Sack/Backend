@@ -15,26 +15,27 @@ export class ProjectsService {
   ) {}
 
   async create(createProjectDto: CreateProjectDto) {
-    const user = this.requestContextService.getUser();
+    const userWallet = this.requestContextService.getUserWalletAddress();
+
     const project = await this.prisma.project.create({
       data: {
         ...createProjectDto,
         budget: createProjectDto.tokenQuantity,
-        user: {
-          connect: {
-            id: (user?.id as number) || 1,
-          },
-        },
+        userWallet,
       },
     });
     return project;
   }
 
   findAll() {
+    const userWallet = this.requestContextService.getUserWalletAddress();
+
     return this.prisma.project.findMany({
+      where: {
+        userWallet,
+      },
       include: {
         _count: true,
-        user: true,
       },
     });
   }

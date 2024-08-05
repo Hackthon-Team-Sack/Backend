@@ -14,4 +14,12 @@ export class RequestContextService {
   getUser(): Record<string, any | string | number> {
     return this.request.user as Record<string, any | string | number>;
   }
+
+  getRequestHeaders() {
+    return this.request.headers;
+  }
+
+  getUserWalletAddress() {
+    return this.request.headers.walletaddress;
+  }
 }

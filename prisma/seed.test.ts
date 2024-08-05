@@ -12,15 +12,10 @@ const projects: Prisma.ProjectCreateInput[] = [
     tokenSymbol: 'TK1',
     rwaRepresentation: 'Cash',
     description: 'Description of Project 1',
-    user: {
-      connect: {
-        id: 1,
-      },
-    },
-
     createdAt: new Date(),
     updatedAt: null,
     contractAddress: '0x1555',
+    userWallet: '0x3ad456d3753BBA798dBCF1073D111A2f12b0feD2',
   },
   {
     name: 'Project 2',
@@ -33,11 +28,7 @@ const projects: Prisma.ProjectCreateInput[] = [
     createdAt: new Date(),
     updatedAt: null,
     contractAddress: '0x1535',
-    user: {
-      connect: {
-        id: 1,
-      },
-    },
+    userWallet: '0x3ad456d3753BBA798dBCF1073D111A2f12b0feD2',
   },
 ];
 
